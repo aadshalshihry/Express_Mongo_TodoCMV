@@ -1,13 +1,24 @@
-var createError = require('http-errors');
-var express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
+const createError = require('http-errors');
+const express = require('express');
+const mongoose = require('mongoose');
+const path = require('path');
+const cookieParser = require('cookie-parser');
+const logger = require('morgan');
+const dotenv = require('dotenv');
+const Promise = require('bluebird');
 
-var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
+const indexRouter = require('./routes/index');
+const usersRouter = require('./routes/users');
 
-var app = express();
+// to get environments variables
+dotenv.config();
+
+// Institutionalize express
+const app = express();
+
+// Connect Mongoose and add the Promise using bluebird
+mongoose.Promise = Promise;
+mongoose.connect(process.env.MONGODB_URL);
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -21,6 +32,9 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
+
+// API Router
+app.use('/api/auth/', require('./routes/api/UserRouterAPI'))
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
