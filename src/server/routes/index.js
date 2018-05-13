@@ -1,9 +1,12 @@
-var express = require('express');
-var router = express.Router();
+// var express = require('express');
+// var router = express.Router();
+// import express from 'express';
 
-/* GET home page. */
-router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Express' });
-});
+import {index} from '../controllers/indexController';
 
-module.exports = router;
+const indexRouter = (app) => {
+    const prefix = '/';
+    app.get(`${prefix}/`, index)
+};
+
+export default indexRouter;

@@ -1,22 +1,20 @@
 import express from 'express';
 import jwt from 'jsonwebtoken';
-import User from '../../models/User';
+import ToDo from '../../models/ToDo';
 
 
 const router = (app) => {
     const prefix = "/api/auth";
 
     // API SingUp
-    app.post(`${prefix}/remote_signup`, (req, res) => {
-        const { username, email, password } = req.body.user;
+    app.post(`${prefix}/add_new_todo`, (req, res) => {
+        const { name, userId } = req.body.todo;
 
-        const user = new User({ username, email });
-        user.setPassword(password);
-        user.setConfirmationToken();
-        user.save()
-            .then(userRecord => {
-                // sendConfirmationEmail(userRecord);
-                res.json({ user: userRecord.toAuthJSON() });
+        const todo = new ToDo({ name, userId });
+
+        todo.save()
+            .then(todoRecord => {
+                res.json({ user: todoRecord });
             })
             .catch(err => res.status(400).json({ errors: "Error: "+err }));
     });

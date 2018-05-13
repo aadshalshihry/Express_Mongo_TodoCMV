@@ -1,11 +1,7 @@
-// import mongoose from 'mongoose';
-// import bcrypt from 'bcrypt';
-// import jwt from 'jsonwebtoken';
-// import uniqueValidator from 'mongoose-unique-validator';
-const mongoose = require('mongoose');
-const bcrypt = require('bcrypt');
-const jwt = require('jsonwebtoken');
-const uniqueValidator = require('mongoose-unique-validator');
+import mongoose from 'mongoose';
+import bcrypt from 'bcrypt';
+import jwt from 'jsonwebtoken';
+import uniqueValidator from 'mongoose-unique-validator';
 
 // TODO:
 const schema = new mongoose.Schema({
@@ -74,4 +70,4 @@ schema.methods.toAuthJSON = function toAuthJSON() {
 
 schema.plugin(uniqueValidator, { message: 'This email is already taken'});
 
-module.exports =  mongoose.model('User', schema);
+export default mongoose.model('User', schema);

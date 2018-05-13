@@ -3,16 +3,18 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "nodemon ./src/server/bin/www"
+    "start": "nodemon --exec babel-node ./src/server/bin/www"
   },
   "dependencies": {
     "bcrypt": "^2.0.1",
     "bluebird": "^3.5.1",
+    "connect-mongo": "^2.0.1",
     "cookie-parser": "~1.4.3",
     "debug": "~2.6.9",
     "dotenv": "^5.0.1",
     "ejs": "~2.5.7",
     "express": "~4.16.0",
+    "express-session": "^1.15.6",
     "http-errors": "~1.6.2",
     "jsonwebtoken": "^8.2.1",
     "mongoose": "^5.1.0",
@@ -20,6 +22,9 @@
     "morgan": "~1.9.0"
   },
   "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-plugin-transform-object-rest-spread": "^6.26.0",
+    "babel-preset-env": "^1.7.0",
     "nodemon": "^1.17.4"
   }
 }
