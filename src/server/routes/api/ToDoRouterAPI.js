@@ -1,44 +1,17 @@
-import express from 'express';
-import jwt from 'jsonwebtoken';
-import ToDo from '../../models/ToDo';
-
+import {getUserTodos, userById, createUserTodo} from "../../controllers/api/apiTodoController";
 
 const router = (app) => {
     const prefix = "/api/auth";
 
-    // API SingUp
-    app.post(`${prefix}/add_new_todo`, (req, res) => {
-        const { name, userId } = req.body.todo;
+    // API Todo
+    app.get(`${prefix}/user_todos/:userId`, getUserTodos);
 
-        const todo = new ToDo({ name, userId });
+    app.post(`${prefix}/create_todo/:userId`, createUserTodo);
 
-        todo.save()
-            .then(todoRecord => {
-                res.json({ user: todoRecord });
-            })
-            .catch(err => res.status(400).json({ errors: "Error: "+err }));
-    });
 
-    // API login
-    app.post(`${prefix}/remote_login`, (req, res) => {
-        const credentials = req.body;
+    app.param('userId', userById);
 
-        User.findOne({username: credentials.username}).then(user => {
-            if (user && user.isValidPassword(credentials.password)) {
-                res.json({ user: user.toAuthJSON() });
-            } else {
-                res.status(400).json({ errors: { global: "Invalid credentials "}});
-            }
-        })
-    });
 };
-
-/* :Todo
-    1. confirmation
-    2. reset password
-    3. validate_token
-    4. set_new_password
- */
 
 
 export default router;

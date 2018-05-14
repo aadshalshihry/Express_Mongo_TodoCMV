@@ -6,7 +6,26 @@ export const index = (req, res) => {
         console.log(todos);
         res.render('index', {
             title: "New Express",
-            todos: todos
+            todos: todos,
+            user: req.user
         });
     });
+};
+
+export const renderLoginPage = (req, res) => {
+    if(req.session.passport.user){
+        res.render('index', {
+            title: "New Express",
+        });
+    } else {
+        res.render('login', {
+            title: "Login",
+            message: req.flash('loginMessage')
+        });
+    }
+};
+
+export const signout = (req, res) => {
+    req.logout();
+    res.redirect("/");
 };
